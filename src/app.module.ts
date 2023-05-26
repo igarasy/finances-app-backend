@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { FinancesModule } from './app/finances/finances.module';
+
 
 @Module({
   imports: [
@@ -16,10 +18,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         username: configService.get('USERNAME', 'root'),
         password: configService.get('PASSWORD', '123'),
         database: configService.get('DB_DATABASE', 'finances'),
-        entities: [],
+        entities: [__dirname + '/**/*.entity{.js,.ts}'],
         synchronize: true,
       }),
     }),
+    FinancesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
